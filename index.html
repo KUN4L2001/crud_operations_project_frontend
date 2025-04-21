@@ -1,11 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" ng-app="myMod">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/angular-ui-grid/ui-grid.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="node_modules/angular-ui-grid/ui-grid.min.js"></script>
+    <title>SCREEN</title>
 </head>
-<body>
-    
+<body ng-controller="myController">
+    <div ui-grid="gridOptions"></div>
+    <script>
+        var app = angular.module('myMod',['ui.grid']);
+
+        app.controller("myController",function($scope,myService){
+            $scope.gridOptions = {
+                columnDefs : [
+                    {field:'id', displayName: 'ID', width: 50 },
+                    {field:'name', displayName: 'Name'},
+                    {field:'email', displayName: 'Email'},
+                    {field:'age', displayName: 'Age'}
+                ],
+                data: []
+            }
+            myService.getAllPerson()
+                                .then(function(response){
+                                    $scope.response = response;
+                                    $scope.gridOptions.data = response;
+                                }, function(error){
+
+                                })
+                                
+        });
+        app.service("myService",function($http){
+            var vm = this;
+            vm.getAllPerson = function(){
+                return $http({
+                    method:'GET',
+                    url:`http://localhost:8080/api/persons`
+                }).then(function(response){
+                    return response.data;
+                })
+            }
+        });
+    </script>
 </body>
 </html>

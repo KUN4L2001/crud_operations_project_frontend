@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "angular-ui-grid": "^4.12.7"
+  }
+}
