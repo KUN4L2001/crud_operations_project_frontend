@@ -15,6 +15,15 @@
 
         app.controller("myController",function($scope,myService){
             $scope.gridOptions = {
+                rowTemplate:`<div class="ui-grid-row" style="height="10vh";">
+    <div ng-repeat="(colRenderIndex, col) in colContainer.renderedColumns track by col.uid" class="ui-grid-cell" ui-grid-cell></div>
+    <div class="custom-row-elements">
+        <div>Hello</div>
+        <button>True Hit</button>
+        <button>False Hit</button>
+    </div>
+</div>`,
+                showHeader:false,
                 columnDefs : [
                     {field:'id', displayName: 'ID', width: 50 },
                     {field:'name', displayName: 'Name'},
